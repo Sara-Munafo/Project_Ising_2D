@@ -1,0 +1,366 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts, amssymb, amsthm, graphicx, amsmath}
+\usepackage[scr=rsfs]{mathalpha}
+\usepackage{geometry}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+%\setbeamertemplate{caption}{\insertcaption}
+%\usepackage{floatrow}
+\usepackage{subfig}
+\usepackage{outlines}
+\usepackage{indentfirst}
+\usepackage{textcomp}
+\usepackage{titlesec}
+\setbeamertemplate{footline}[frame number]
+\usepackage{appendixnumberbeamer}
+
+\mode<presentation>
+{
+
+\usetheme{Madrid}
+\usecolortheme{whale}
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+\usecolortheme[named=bostonuniversityred]{structure}
+
+
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+}
+
+
+\logo{\includegraphics[width=15mm]{LOGO.jpg}}
+\title[]{Dinamica stocastica di atomi raffreddati da laser}
+\date{18 Luglio, 2022}
+\author[Isotton Gloria]{\vspace{-1cm}\begin{spacing}\begin{tabular}{ l  c   c  cc c c c c  l } \quad   {{ Relatore}} &&&&&&&&& {{ Laureanda}}\\ \quad   {{ Prof. Marco Baiesi}} &&&&&&&&&  {{ Gloria Isotton}}\\ {{}} &&&&&&&&&&& {{ }}\\ {{}} &&&&&&&&&&& {{ }}\\ \end{tabular} \end{spacing} }
+
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\begin{center}
+Università degli Studi di Padova
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Raffreddamento Sisifo (Tannoudji-1989)}
+É un'avanzata tecnica di raffreddamento;
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width = 1.\textwidth]{gradiente_polarizzazione.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Raffreddamento Sisifo (Tannoudji-1989)}
+\begin{itemize}
+\item <1->Il pompaggio ottico preleva l’atomo dal punto superiore del sottolivello energetico e lo trasferisce a valle, tramite emissione spontanea di un fotone.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width = 0.55\textwidth]{sisifo_bn.png}
+\end{figure}
+\item <2-> La forza d'attrito Sisifo è data da ($p=mv$): 
+\begin{equation}
+F_f(p) = \frac{-\gamma p}{1+(p/p_c)^2} \ .\notag 
+ \label{eq:friction }
+\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Atomi raffreddati da laser}
+\begin{itemize}
+\item <1-> Gli atomi raffreddati da laser con il meccanismo di Sisifo possono essere considerati in contatto con un bagno ottico;
+\item <2->l’effetto del bagno ottico è quello di produrre:
+\begin{itemize}
+\item <3->un termine di attrito dissipativo:
+\begin{equation}
+F_f(p) = \frac{-\gamma p}{1+(p/p_c)^2} \ ;\notag
+ \label{eq:friction }
+\end{equation}
+\item <4->una forza casuale $F$ che provoca la diffusione:
+\begin{equation}
+F = \sqrt{2 D(p)} \xi (t) \notag
+\end{equation}
+con $\xi (t)$ rumore bianco Gaussiano ($\left \langle \xi(t) \right \rangle = 0$, $\left \langle \xi(t)\xi(t') \right \rangle = \delta(t-t′)$), mentre $D(p)=D_0+D_1(p)$ coefficiente di diffusione.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Equazioni di Langevin e di Fokker-Planck}
+\begin{itemize}
+\item <1->La dinamica stocastica degli atomi è descritta tramite equazioni simili a quelle per una particella Browniana circondata dal fluido:
+\begin{itemize}
+\item <2-> modello di Langevin
+      \begin{equation}
+      \begin{cases}
+             m \frac{d \vec{v}}{dt}=  \vec F_E + \vec F  \\
+            \frac{d\vec{x}}{dt}=\vec{v}
+      \end{cases}  \ ;
+      \notag
+      \end{equation}
+
+\item <3-> modello di Fokker-Planck (equazione di Kramers):
+$$
+ \frac{\partial \rho }{\partial t} =  -v \frac{\partial  \rho }{\partial x}- \frac{\partial \rho }{\partial v} (F_E \rho) +\frac{\partial^2 \rho}{\partial v^2}(D\rho) \ .
+$$
+\end{itemize}
+\item <4-> Le equazioni di Langevin per un atomo raffreddato col metodo di Sisifo e sottoposto a confinamento armonico ($U(x)=1/2 \Omega x^2$), nelle unità adimensionali, sono: 
+\begin{equation}
+\begin{cases}
+\small{\dot{v}(t)= \underset{confinamento}{\underbrace{-U'(x)}} + \underset{attrito}{\underbrace{\frac{\partial D(v)}{\partial v} + \frac{- v}{1+v^2}}}+\underset{rumore}{\underbrace{\sqrt{2 D(v)} \xi (t)}}} \\
+\small{\dot{x}(t)=\Omega v(t)}\\
+\end{cases} \notag
+\label{eq:langevin}
+\end{equation}
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Viriale e legge di equipartizione: risultati classici}
+\begin{itemize}
+\item <1->Teorema  di equipartizione nella fisica statistica classica:
+\begin{equation}
+    \left \langle H \right \rangle = \left \langle \sum_{i}  A_iq_i^2 + \sum_{i}  B_ip_i^2\right \rangle = \frac{1}{2} f k_B T \ \notag 
+\end{equation}
+($f$ = numero di termini quadratici dell'Hamiltoniana).
+All'equilibrio i gradi di libertà cinetico e potenziale sono indipendenti tra loro e possono essere descritti separatamente.
+%Per ogni grado di libertà quadratico che compone il moto complessivo di una particella, esiste un contributo di energia pari a 1/2 kB T Nella formula f conta infatti il numero di termini quadratici dell'Hamiltoniana
+\item <2->Nel caso 1-dim. per una particella Browniana sottoposta a confinamento armonico in unità adimensionali: 
+\begin{equation}
+ \frac{1}{2} \left \langle x^2\right \rangle =  \frac{1}{2} \left \langle v^2 \right \rangle = \frac{1}{2} k_B T \quad \longrightarrow \quad  \chi_{cl} = \frac{\left \langle x^2 \right \rangle}{\left \langle v^2 \right \rangle} = 1 \ \notag
+\end{equation} 
+(teorema del viriale classico).
+%ogni grado di libertà quadratico contribuisce come $\frac{1}{2} k_B T $ all'energia media.
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Viriale e legge di equipartizione: risultati generalizzati}
+\begin{itemize}
+\item <1->il teorema del viriale per una particella raffreddata a laser è:
+\begin{equation}
+-\Omega \left \langle vg(v)\right \rangle + \left \langle  g'(v)xU'(x)\right \rangle = D_0\left \langle xg''(v) \right \rangle \ ;
+\end{equation}
+\item <2-> La legge di equipartizione generalizzata per il raffreddamento Sisifo con confinamento armonico è:
+\begin{equation}
+&  \left \langle v^2 \right \rangle +\frac{1}{3} \left \langle v^4 \right \rangle = \left \langle x^2\right \rangle + \left \langle v^2x^2 \right \rangle \ ;
+\end{equation}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algoritmo integrativo per la dinamica di Langevin}
+\begin{itemize}
+\item <1->L'algoritmo è basato su $velocity$ $Verlet$ e adattato al caso di un atomo raffreddato da laser, con:
+\vspace{0.2cm}
+\begin{itemize}
+\item <2->forza d’attrito Sisifo non lineare in $p$, $F_f(v) = \frac{-v}{1+v^2} $;
+\vspace{0.2cm}
+\item <3->rumore stocastico $\mathscr{N}$;
+\vspace{0.2cm}
+\item <4->confinamento armonico  $f_t =  - \Omega x_{t} $.\\
+\end{itemize}
+\item <5->Per generare i termini di rumore stocastico $\mathscr{N}$ è stato usato l'algoritmo di Marsaglia.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Risultati della simulazione numerica}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width = 1\textwidth]{Mp2.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Risultati della simulazione numerica}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width = 1\textwidth]{Mp1.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Risultati della simulazione numerica}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width = 1\textwidth]{Np3.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Risultati della simulazione numerica}
+    \begin{figure}
+	\centering
+	\includegraphics[width = 1\textwidth]{equi2.png}
+    \end{figure}
+    
+\end{frame}
+
+\begin{frame}{Conclusioni della tesi}
+\begin{itemize}
+\item <1-> Il teorema del viriale e la legge di equipartizione si possono generalizzare nel caso di atomi raffreddati da laser con il meccanismo di Sisifo e confinati armonicamente.
+\vspace{0.5cm}
+\item <2-> I risultati teorici trovano conferma nelle simulazioni numeriche.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\begin{center}
+{{\huge{\textsc{\bf Grazie per l'attenzione}}}\\}
+\end{center}
+\end{frame}
+\appendix
+
+\begin{frame}{Bibliografia}
+\begin{itemize}
+\item slides 2-3: Gadi Afek et al. Anomalous statistics of laser-cooled atoms in dissipative optical lattices. 2021; J. Dalibard e C. Cohen-Tannoudji. “Laser cooling below the Doppler limit by polarization gradients: simple theoretical models”.
+\item slides 5-6: William Coffey e Yuri Kalmykov. The Langevin Equation: With Applications to Stochastic Pro-
+blems in Physics, Chemistry and Electrical Engineering, 3rd Edition. Set. 2012. 
+\item slides 8-9: David A. Sivak, John D. Chodera e Gavin E. Crooks. “Using Nonequilibrium Fluctuation Theo-
+rems to Understand and Correct Errors in Equilibrium and Nonequilibrium Simulations of Di-
+screte Langevin Dynamics”.
+\item slide 4, 8, 13: Gianmaria Falasco, Eli Barkai e Marco Baiesi. “Generalized virial equation for nonlinear multipli-
+cative Langevin dynamics: Application to laser-cooled atoms”. In: Physical Review E 105.2 (feb.
+2022).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Calcoli: viriale per dinamica di Langevin}
+ \vspace{-0.5cm}
+\begin{equation}
+\begin{aligned}
+\int pq\left (\cancel{\frac{\partial  \rho}{\partial t}} + \frac{p}{m}\frac{\partial  \rho}{\partial q}- U'(q) \frac{\partial  \rho }{\partial p}\right)dqdp &= \int \frac{p^2}{m}q\frac{\partial  \rho}{\partial q}dqdp - 
+\int pq U'(q) \frac{\partial  \rho }{\partial p}dqdp =\\
+=- \int \frac{p^2}{m} \rho dqdp + \int q U'(q) \rho dqdp &=-\left \langle \frac{p^2}{m} \right\rangle + \langle qU'(q) \rangle
+\end{aligned} \notag
+\label{eq:langevin}
+\end{equation}
+
+\begin{equation}\begin{aligned} 
+\int pq \frac{\partial^2 \rho}{\partial p^2}[D(p)\rho]  dqdp -& \int qp \frac{\partial  \rho }{\partial p} [F (p) \rho] dqdp =  \\
+- \int 1 \cdot q \frac{\partial \rho}{\partial p}[D(p)\rho] dqdp +& \int q [F (p) \rho] dqdp = -\langle q F(p)  \rangle
+\\ 
+\label{eq:langevin2} \end{aligned}  \notag 
+\end{equation}
+Si ottiene infine: 
+ \vspace{-0.1cm}
+\begin{equation}
+\left \langle \frac{p^2}{m} \right \rangle - \langle qU'(q) \rangle = -\langle q F(p)  \rangle
+ \label{eq:Virial}  \notag
+\end{equation}
+\end{frame}
+
+\begin{frame}{Calcoli: viriale per attrito Sisifo}
+Moltiplicando l’equazione di Kramers nel caso stazionario per il fattore xg(v) e integrando per parti si ottiene al primo membro:
+\begin{equation}\begin{aligned}
+&\int xg(v)\left( \cancel{\frac{\partial  \rho }{\partial t}} + \Omega v  \frac{\partial  \rho }{\partial x} - U'(x) \frac{\partial  \rho }{\partial v} \right)dxdv = \int \Omega \underset{f(x)}{\underbrace{ xg(v) v}}  \underset{h'(x)}{\underbrace{\frac{\partial  \rho }{\partial x}}}dxdv - \\
+&- \int \underset{f(v)}{\underbrace{xg(v)U'(x)}} \underset{h'(v)}{\underbrace{\frac{\partial  \rho }{\partial v}}}  dxdv  = -\int\Omega vg(v)\rho dxdv +\\
+&+ \int x g'(v)U'(x)\rho dxdv =  -\left \langle \Omega vg(v) \right \rangle +\left \langle x g'(v)U'(x) \right \rangle ,
+\end{aligned} \notag
+\end{equation}
+\end{frame}
+
+\begin{frame}{Calcoli: viriale per attrito Sisifo}
+Mentre al secondo membro:
+\begin{equation}
+\begin{aligned}
+&\int xg(v)\frac{\partial^2 \rho}{\partial v^2}[D(v)\rho]-\frac{\partial}{\partial v}[F (v) \rho]dxdv=
+\int \underset{f(v)}{\underbrace{ xg(v)}} \underset{h'(v)}{\underbrace{\frac{\partial^2 \rho}{\partial v^2}[D(v)\rho]}} + \\
+&\int \underset{f(v)}{\underbrace{ xg(v)}} \underset{h'(v)}{\underbrace{\frac{\partial}{\partial v}[F_f (v) \rho]}}dxdv -\int \underset{f(v)}{\underbrace{xg(v)}} \underset{h'(v)}{\underbrace{\frac{\partial }{\partial v}[\frac{\partial D(v)}{\partial v}\rho]}}dxdv = \\
+&\int xg'(v)\frac{\partial\rho}{\partial v}[D(v)\rho] + \left \langle xg'(v)F(v) \right \rangle =\\
+&=\left \langle xg''(v)D_0 \right \rangle + \left \langle xg''(v)D_1(v) \right \rangle +  \left \langle xg'(v)F(v) \right \rangle + \left \langle xg'(v) \frac{\partial D(v)}{\partial v}\right \rangle  
+\end{aligned}   \notag
+\end{equation}
+\end{frame}
+
+
+\begin{frame}{Calcoli: viriale per attrito Sisifo}
+Ora, tenendo conto della relazione di Einstein per cui $D_1(v) = \alpha F_f(v)/v = \alpha /g'(v)$ \footnote{Si ricordi che dal passaggio a unità adimensionali $D_1(v) = \frac{D_1}{1+v^2}$ e che $F_f(v)=-\frac{v}{1+v^2}$, quindi $D_1(v)= \alpha \frac{F_f(v)}{v}$ con $\alpha$ una certa costante.} e del fatto che $g'(v)F_f(v)=v$, in quanto $\left \langle xg'(v)F(v) \right \rangle = \left \langle xv \right \rangle = 0$, si ottiene un'equazione generale:
+ \vspace{-0.1cm}
+\begin{equation}
+-\Omega \left \langle vg(v)\right \rangle + \left \langle  g'(v)xU'(x)\right \rangle = D_0\left \langle xg''(v) \right \rangle \ .
+\end{equation}
+\end{frame}
+
+
+\begin{frame}{Calcoli: legge di equipartizione}
+Nel caso di attrito Sisifo, con $g(v)=(v+\frac{v^3}{3})$ si ottiene una nuova legge di equipartizione generalizzata:
+\begin{equation}
+ \begin{aligned}
+& -\Omega\left \langle v(v+\frac{v^3}{3}) \right \rangle + \left \langle (1+v^2)xU'(x) \right \rangle = D_0 \underset{0}{\underbrace{\left \langle2vx\right \rangle}} \\ &\Omega \left \langle v^2 \right \rangle +\frac{\Omega}{3} \left \langle v^4 \right \rangle = \left \langle xU'(x) \right \rangle + \left \langle v^2xU'(x) \right \rangle \ ,
+\end{aligned} \notag
+\end{equation}
+che nel caso di confinamento armonico $U(x) = \frac{1}{2}\Omega x^2$ diviene: 
+\begin{equation}
+\begin{aligned}
+&  \left \langle v^2 \right \rangle +\frac{1}{3} \left \langle v^4 \right \rangle = \left \langle x^2\right \rangle + \left \langle v^2x^2 \right \rangle \ .
+\end{aligned}
+\end{equation} \notag
+\end{frame}
+
+\begin{frame}{Tabella unità adimensionali}
+\begin{table}[htbp!]\centering
+\begin{tabular}{lll}
+\hline 
+quantità                   &          & adimensionale \\ \hline \hline
+tempo                      & $t$      &   $t \leftarrow \gamma t$            \\
+impulso                    & $p$      &   $v = \frac{p}{p_c}$            \\
+posizione                  & $x$      &   $x = \frac{m \omega}{p_c}q$            \\
+frequenza angolare         & $\omega$ &   $\Omega = \frac{\omega}{\gamma}$            \\
+coefficienti di diffusione & $D_0$    &   $D_0 = \frac{D_0}{\gamma p_c^2}$            \\
+                           & $D_1$    &   $D_1 = \frac{D_1}{\gamma p_c^2}$            \\
+                           & $D_1(p)$ &   $D_1(v) = \frac{D_1}{1+v^2}$            \\
+                           &  $D(p)=D_0 + D_1(p)$        &    $D(v)= D_0 + D_1(v)$         \\
+forza d'attrito            &   $F_f(p) $       &      $F_f(v)=-\frac{v}{1+v^2}$       \\
+forza armonica             &   -$U'(q) = - \omega q^2$       &    $-U'(x)=-\Omega x$           \\ \hline
+\end{tabular}
+\caption{}
+\label{adim}
+\end{table}
+
+\end{frame}
+
+
+\begin{frame}{Algoritmo iterativo}
+    \vspace{-0.1cm} 
+\begin{equation} 
+ c_t = e^{-\frac{1}{2} dt/(1+v_t^2)}
+ \label{eq:1}    
+\end{equation}
+\vspace{-0.4cm} 
+\begin{equation} 
+ \hspace{0.6cm} v_{t+\frac{dt}{2}} = c_t v_t + \frac{dt}{2} f_t  + B \mathscr{N} 
+ \label{eq:2}    
+\end{equation}
+\vspace{-0.4cm} 
+\begin{equation} 
+ \hspace{-0.1cm}x_{t+dt} = x_t + \Omega dt v_{t+\frac{dt}{2}}
+ \label{eq:3}    
+\end{equation}
+\vspace{-0.4cm} 
+\begin{equation} 
+  \hspace{-1cm}f_{t+dt} = - \Omega x_{t+dt}
+ \label{eq:4}    
+\end{equation}
+\vspace{-0.4cm} 
+\begin{equation} 
+ \hspace{0.3cm}c_{t+\frac{dt}{2}} = e^{-\frac{1}{2} dt/(1+v_{t+dt/2}^2)}
+ \label{eq:5}    
+\end{equation}
+\vspace{-0.4cm} 
+\begin{equation} 
+ \hspace{2.5cm} v_{t+dt} = v_{t+\frac{dt}{2}} c_{t+\frac{dt}{2}} + \frac{dt}{2} f_{t+dt} + B \mathscr{N}'
+ \label{eq:6}  \ .  
+\end{equation}
+\end{frame}
+
+
+\end{document}
+
