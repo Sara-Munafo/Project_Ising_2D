@@ -1,0 +1,20 @@
+In order to simulate the behaviour of this model, we need to compute the transition probability $W(\sigma \rightarrow \sigma')$ from one state $\sigma$ to the next state $\sigma'$. This can be written as the product of the selection probability $g$ and the acceptance probability $A$:
+$$ W(\sigma \rightarrow \sigma') = g(\sigma \rightarrow \sigma')* A(\sigma \rightarrow \sigma') $$
+- For the former, following the Glauber dynamics, we chose to implement a Monte Carlo algorithm based on local moves. In this case the selection probability is clearly uniform:
+$$g(\sigma \rightarrow \sigma') = 1/N^2$$
+- For the second one we set that te acceptance probability must respect the Metropolis-Hasting rule:
+<br>
+$$ A(\sigma \rightarrow \sigma') = 
+\begin{cases} 
+e^{ - \beta ( E_{\sigma'} - E_{\sigma} ) } \ \ \ \ \ if \ E_{\sigma'} - E_{\sigma}>0
+\\
+1 \hspace{2.5cm} otherwise
+\end{cases} $$
+
+So, imposing the detailed balanced condition for the the transition probabilities, we simply obtain:
+<br>
+$$ \dfrac{W(\sigma \rightarrow \sigma')}{W(\sigma' \rightarrow \sigma)} = \dfrac{A(\sigma \rightarrow \sigma')}{A(\sigma' \rightarrow \sigma)} = \dfrac{P(\sigma')}{P(\sigma)} = e^{ - \beta ( E_{\sigma'} - E_{\sigma} ) }$$
+
+And thanks to the Single-Flip dynamics is possibile to simplify further, in fact:
+<br>
+$$ \Delta E = E_{\sigma'} - E_{\sigma} = -(\sigma_i' - \sigma_i) \sum_{j \in n.n.(i)} \sigma_j = 2 \sigma_i \sum_{j \in n.n.(i)} \sigma_j$$
