@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{LCP}
+\author{group 8}
+\date{February 2023}
+
+\begin{document}
+
+\maketitle
+\section{Introduction}
+In this project we will present a detailed numerical study of the second-order phase transition in the 2D Ising model. The importance of correctly presenting elementary theory of phase transitions, computational algorithms and finite-size scaling techniques results in a important understanding of both the Ising model and the second order phase transitions. In doing so, Markov Chain Monte Carlo simulations are performed for different lattice sizes with periodic boundary conditions.
+Energy, magnetization, specific heat, magnetic susceptibility and the correlation function are calculated and the critical exponents determined by finite-size scaling techniques. The importance of the correlation length as the relevant parameter in phase transitions is emphasized.
+
+
+\section{Ising Model}
+In the standard assumptions, particles with a certain spin (up or down) are
+located on the N nodes of a lattice (sites) and interact with their nearest neighbours, i.e. those particles with whom they share an edge (bond). For
+simplicity, spin up is identified with a value $s_{i} = +1$, spin down is $s_{i} = -1$
+(spins are measured in units of $\hbar/2$). The Hamiltonian of a given configuration
+S is given by\\
+$$H(S)= -\sum_{< ij> } J_{ij}s_{i}s_{j} - H \sum_{i} s_{i}$$
+
+The first term is a summation over all pairs of interacting spins; if the
+behaviour of the material is ferromagnetic $J_{ij} > 0$ and concordant spins
+give a negative contribution to the Hamiltonian. The lowest energy level
+is associated with all spins concordant. So far, the Hamiltonian has $\mathbb{Z}_{2}$
+symmetry, and spontaneous magnetization cannot arise:\\
+
+$${M}= \frac{1}{N} \sum_{i=1}^{N}s_{i}=0$$
+
+With $N$ being the amount of sites. For square lattice one simply replaces $N$ by $L^{2}$ where $L$ is the lattice length. 
+\\If one adds the second term, which is simply the potential energy due to
+an external magnetic field B, this explicitly breaks the $\mathbb{Z}_{2}$ symmetry. Even if
+one does not consider this term, two remarkable facts arise: as the number of
+sites $N \rightarrow \infty$ there is spontaneous symmetry breaking; if the temperature is
+above $T_{C}$(Curie temperature) the behaviour of the model is paramagnetic.
+These facts can be explained using the canonical ensemble of statistical
+mechanics. Every configuration is given a probability:
+\\
+$$P(S)= \frac{e^{-\beta H(S)}}{Z}$$
+
+with $\beta= \frac{1}{k_{B}T}$ and $Z$ the partition function. The configuration with the
+minimum Hamiltonian, i.e. the equilibrium one, is also the most likely. By
+making use of mean-field arguments and simplifying assumptions, one can
+get a self-consistent equation:
+
+$$<S> =tanh(\beta J<S>) $$
+The Ising model may be studied on a generic graph. We are interested in networks whose degree distribution is a power law:\\
+$$p_{k}= CK^{-\gamma}$$
+$p_{k}$ is the probability mass that a node has degree k, C is a normalization
+constant and $\gamma$ is called "power law parameter" and controls the slope of the
+power law.
+
+\section{Partition Function}
+Let us recall the definition of the partition function:
+$$Z= \sum_{n} e^{-\beta E_{n}}$$
+where $E$ is the total energy of the system and consider the energy eigenstates\\
+$$\widehat{H}|n \rangle =E_{n}|n\rangle$$
+
+yielding\\
+$$Z=\sum_{n}e^{-\beta E_{n}}= Tr(e^{-\beta \widehat{H}})$$
+and we know that\\
+$$\widetilde{H}= -\beta \widehat{H}$$
+consequently \\
+$$Z=Tr(e^{ \widetilde{H}}) $$
+
+\section{Magnetic Susceptibility and Specific Heat}
+
+Another interesting quantity is the magnetic susceptibility $\chi$. This quantity is related to the equilibrium fluctuations of magnetization
+$$\chi= \beta (\langle M^{2} \rangle - \langle M \rangle^{2})$$
+Near the critical temperature $T_{c}$, several physical properties obey a power
+law dependence on $\mid T-T_{c}\mid$. Critical exponents are commonly labelled
+$\alpha ,\beta ,\gamma ,...$ for $T<T_{c}$, each corresponding to a specific physical quantity.For $T>T_{c}$, the exponents are commonly accompanied by a prime. The exponents
+describe phase transitions of these quantities usually near a critical
+temperature $T_{c}$.So magnetic susceptibility can be written as\\
+$$\chi_{M} \sim \mid 1- \frac{T}{T_{c}} \mid ^{-\gamma}$$
+
+The specific heat can be written as\\
+$$C_{H}\sim \mid 1-\frac{T}{T_{c}}\mid^{-\alpha}$$
+$\alpha$ and $\gamma$ are critical exponents.The dimension of space is very important in phase transitions. Critical exponents fall into different universality classes depending upon both, the space dimension and on the system degrees of freedom.\\
+For a magnetic system, the second exponent, $\beta$, is the easiest to conceptualise.
+$\beta$, corresponding to the order parameter of the system, which
+in a magnetic system is the magnetisation. Thus, what $\beta$ describes is the behaviour when the system spontaneously magnetises. Assuming no
+external magnetic field\\
+$$M \sim \mid 1- \frac{T}{T_{c}}\mid ^{\beta}$$
+The value for $\beta$ was found to be $\beta = 1/8$ for the 2D Ising model.
+
+
+\section{Metropolis}
+Monte Carlo simulations of the Ising model are performed through the
+Metropolis Algorithm (MA). In principle we could construct all the possible states
+the system can access $\big\{n\big\}$ ($(S)$) and their energies $E$($H(S)$). With that information, we could construct the partition function and recover all the thermodynamics of the system.
+However there are $2^{N}$ possible states the system can access, so it is impractical to follow this path for large systems that obey $N >> 1$. This problem is solved by
+designing a Markov chain (or transition matrix) in such
+way that its stationary distribution is the desired distribution.
+MAs belong to a more general class of algorithms,
+Monte Carlo Markov Chains (MCMCs), which are used when the
+probability distribution of the Monte Carlo inputs is unknown. The stationary distribution is: \\
+$$P(S)= \frac{1}{Z}e^{-\beta H(S)}$$
+In our case,the partition function Z is a summation over $2^{N}$ terms and cannot be computed even if the graph is small. The idea of MCMCs is to sample such a probability distribution by making use of an ergodic Markov Chain. But what is a Markov chain? It is one type of stochastic process. It is an evolution in time that is not determinist, but there is a transition probability from the current state to a new state.( A Markov chain satisfies
+that the probability distribution of the next state depends only on the current state.)
+The MA satisfies the detailed balance condition (needed for ergodicity) in
+such a way that $Z$ cancels out. In practice, one takes a starting configuration
+$S$ with Hamiltonian $H(S)$ and modifies it, such as to obtain $S^{\prime}$ with
+$H(S^{\prime})$. Then, the probability to accept the new configuration is\\
+
+$$P(S\rightarrow S^{\prime})= min \big \{1, e^{-\beta[H(S^{\prime})-H(S)]}\big\}$$
+
+If $H(S^{\prime)} < H(S)$ the new configuration is accepted with certainty: this
+is a step towards the equilibrium state (which is just the most likely in
+statistical mechanics). If $H(S^{\prime)} > H(S)$ the new configuration may be
+accepted: this should prevent the system to get stuck in local minima. The
+key term in previous is $\beta$: if $\beta$ is high, $T$ is low and it is less likely that higher energy configurations will be accepted; if $\beta$ is low, $T$ is high (there is a lot
+of noise) and almost any new configuration is accepted. Intuitively, in the
+first case the system will rush towards the equilibrium state; in the latter
+case it will just "wander around" the phase space.
+
+\section{Phase Transition}
+Second order phase transitions are also seen in magnetic systems, such as the Curie point in ferromagnets,which separates the paramagnetic phase from the ferromagnetic one. That means that below the Curie temperature, the system presents spontaneous magnetization in
+absence of an external magnetic field, whereas above it, the system is not magnetized and only responds when an external magnetic field is applied. It is our goal to illustrate what happens in second-order transitions and how do the thermodynamic properties of the systems behave.
+
+\section{Critical Exponent}
+(As mentioned above)Near the critical temperature $T_{c}$, several physical properties obey a power law dependence on $\mid T-T_{c}\mid$. Critical exponents are commonly labelled
+$\alpha ,\beta ,\gamma ,...$ for $T<T_{c}$, each corresponding to a specific physical quantity.For $T>T_{c}$, the exponents are commonly accompanied by a prime. The exponents
+describe phase transitions of these quantities usually near a critical temperature $T_{c}$.\\
+\\
+Here we list the critical exponents when $H=0$ for the 2D Ising Model:\\
+\begin{table}[h!]
+\centering
+ \begin{tabular}{|c| c| c|} 
+ \hline
+ Physical Quantity & Critical Exponent & 2D Ising Model \\ [0.5ex]
+ \hline
+ Specific heat & $\alpha$ & 0 \\ 
+ \hline
+ Magnetization & $\beta$ & 1/8 \\
+ \hline
+Susceptibility & $\gamma$ & 7/4 \\
+ \hline
+Correlation Length & $\nu$ & 1 \\
+ \hline
+   & $\eta$ & 1/4  \\ [1ex]
+ \hline
+ \end{tabular}
+\end{table}
+
+\section{Finite Size Scaling}
+As we have stated before, near the critical temperature, the correlation length diverges following a power law.\\
+$$\xi \sim \mid 1- \frac{T}{T_{c}} \mid^{-\nu}$$
+\\
+For a finite system, the thermodynamics quantities are smooth functions of the system parameters, so the divergences of the critical point phenomena are absent. Despite this fact, in the scaling region ($\xi \gg L$), we can see traces of these divergences in the occurrence of peaks:peaks become higher and narrower and its location is shifted with respect to the location of the critical point as the system size increases. These characteristics of the peak shape as a function of temperature
+are described in terms of the so-called finite-size scaling exponents:
+\\
+- The The shift in the position of the maximum with respect to the critical temperature is described by,
+$$T_{c}(L)-T_{c}(\infinit)\propto L^{-\lambda}$$
+-The width of the peak scales as, 
+$$\Delta T(L)\propto L^{-\Theta}$$
+-The peak height grows with the system size as, 
+$$A_{max}(L)\propto L^{\sigma_{max}}$$
+\\ Defining $t= \mid 1- \frac{T}{T_{c}} \mid$, the finite-size scaling Ansatz is formulated as follows:\\
+$$\frac{A_{{L}(t)}}{A_{\infinit}(t)}= f[\frac{L}{\xi_{\infinit}}(t)]$$
+where $A$ is a physical quantity. Assuming that the exponent of the critical divergence of $A$ is $\sigma$, and using the fact that $\xi \sim t^{-\nu}$, the scaling Ansatz is formulated as,
+$$A_{L}(t)= t^{-\sigma} f[Lt^{-\nu}]$$
+which can be rewritten as,
+$$A_{L}(t)=L^{\sigma/\nu}\phi [L^{1/\nu}t]$$
+where the scaling function $f$ is replaced by $\phi$, by extracting the factor $(Lt^{\nu})^{\sigma/\nu}$ from $f$ and writing the remaining
+function in terms of $(Lt^{\nu})^{1/\nu}$. Now, from the last equation we can conclude that:
+\\ {\LARGE \textbf{.} }The peak height scales as $L^{\sigma/\nu}$, hence $\sigma_{max}=\sigma/\nu$
+\\ {\LARGE \textbf{.} }The peak position scales as $L^{-1/\nu}$, hence $\lambda= 1/\nu$
+\\ {\LARGE \textbf{.} }The peak with also scales as $L^{-1/\nu}$, hence $\Theta=1/\nu$
+\\ 
+\ These are the finite-size scaling laws for any thermodynamic quantity which diverges at the critical point as a power law. From these laws it is clear that if the peak
+height, position and width are calculated as a function of the system size, the critical exponents $\nu$ and $\sigma$ can be determined.\\
+Nevertheless, the finite-size scaling technique presents difficulties due a to phenomena named critical slowing-down. Because of the critical slowing-down, configurations change very slowly, and it is difficult to sample enough configurations. Near the critical point, the fluctuations increase and the time needed to obtain reliable values for the quantities measured also increases. As the system size increases, calculations for larger systems require more time, not only because of the computational effort needed per MC step for a larger system, but also because we need to generate more and more configurations in order to obtain reliable results.
+
+
+
+
+\section{Invariance Scale}
+
+
+\section{The Correlation Function}
+In statistical physics, the correlation function is usually defined as the difference between the canonical ensemble average of the scalar product between two random variables
+$s_{1}$ and $s_{2}$, which might denote, spins at position $r_{0}$ and
+$r_{0} + r$ or the displacement of particles at these positions. In other word,In systems where a physical magnitude relies on position, given a measure at point $r_{i}$ what
+is the relation between another measure at a position $r_{j}$ .
+This is given by the spatial correlation function and if the system presents translational and rotational symmetry (such as the Ising model), the correlation function
+does not depend on the absolute positions, but on the distance between them $r= \mid r_{i}-r_{j}\mid$ which we represent it by $r_{0} + r$. The correlation
+function we are interested in is the spin-spin correlation
+function that is given by,
+\\
+$$G(r,T)= \langle s_{1}(r_{0},t)s_{2}(r_{0}+r,t) \rangle _{r_{0}} - \langle s_{1}(r_{0},t)\rangle _{(r_{0})} ^{2} $$
+\\
+We are limited to obtain the correlation function up to $L=2$, where $L$ is the lattice size. This came as a price of the periodic boundary conditions we are using. The process for numerically computing the correlation function is the following: For each spin in the lattice, we determine the value of the local correlation function in
+$r = n$ taking the average magnetic state of the nearest neighbors found advancing $n$ steps in one direction. The global correlation function is taken as the average of all the local correlation functions. The process is repeated for multiple simulations of the Ising model.
+
+Introducing the external control parameter $X$, in the thermodynamic limit one expects to find a power-law behavior when
+$X$ is tuned to a critical value $X_{c}$:\\
+$$C(r|X_{c})\sim r^{-\eta}$$
+It implies that the relative change in correlation is independent of the scale of $r$. The fact that correlations are present at all scales translates into the existence of long-range correlations and the resulting critical behavior of the whole system. Away from the critical
+point, correlations typically decay as an exponential function, and the characteristic length of the exponential is referred to as the correlation length $\overline{\xi}$ . The typical functional form that is assumed for the correlation function near a critical point is
+$$C(r|X,L) \sim  r^{- \eta}e^{-\frac{r}{\overline{\xi}(X,L)}}$$
+\\
+where $\overline{\xi}$ indicates the typical length over which two positions in the system are correlated and depends on the control parameter of the system $X$ and the system size $L$.
+\\
+The correlation function $G(r,T)$ is represented as a function of $r$ for different temperatures. For $T > T_{c}$ the correlation function falls of exponentially, at $T = T_{c}$ if follows a power law and for $T < T_{c}$, it reaches a constant
+value for large $r$.
+
+
+
+
+\end{document}
